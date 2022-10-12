@@ -21,7 +21,7 @@ function Home() {
     useEffect(() => {
         getData(API_CONSTANTS.GETDATA, response => {
             setLoading(false);
-            setData(response.data);
+            setData(response.data.results);
         });
     }, [])
     
@@ -32,19 +32,19 @@ function Home() {
                 {
                     label: 'Abilities',
                     key: 1,
-                    children:<div className='tagData'>{response.abilities.map(items => { return <Tag color='#788cd5' style={{
+                    children:<div className='tagData'>{response.data.abilities&&response.data.abilities.length && response.data.abilities.map(items => { return <Tag color='#788cd5' style={{
                         margin: '0.6rem',width:'100px', padding:'10px',textAlign:'center', borderRadius:'4px',textTransform:'capitalize',fontSize:'14px',cursor:'pointer'}}  onClick={()=>onClickData(items.ability.url)}>{items.ability.name}</Tag> })} </div>
                 },
                 {
                     label: 'Forms',
                     key: 2,
-                    children:<div className='tagData'>{response.forms.map(items => { return <Tag color='#788cd5' style={{
+                    children:<div className='tagData'>{response.data.forms&&response.data.forms.length && response.data.forms.map(items => { return <Tag color='#788cd5' style={{
                         margin: '0.6rem',width:'100px', padding:'10px',textAlign:'center', borderRadius:'4px',textTransform:'capitalize',fontSize:'14px' ,cursor:'pointer'}} onClick={()=>onClickData(items.url)}>{items.name}</Tag> })} </div>
                 },
                 {
                     label: 'Game Indices',
                     key: 3,
-                    children: <div className='tagData'>{response.game_indices.map(items => { return <Tag color='#788cd5' style={{
+                    children: <div className='tagData'>{response.data.game_indices&&response.data.game_indices.length && response.data.game_indices.map(items => { return <Tag color='#788cd5' style={{
                         margin: '0.6rem',width:'100px', padding:'10px',textAlign:'center', borderRadius:'4px',textTransform:'capitalize',fontSize:'14px',cursor:'pointer'}}  onClick={()=>onClickData(items.version.url)}>{items.version.name}</Tag> })} </div>
                 }
             ]
@@ -70,7 +70,7 @@ function Home() {
                 <>
                     <h1 className='heading'><img src={Logo} alt='' width='40' height='40' /> Pokemon</h1>
                     <ul className='Data'>
-                        {data.map((user, index) => {
+                        {data && data.length>0 && data.map((user, index) => {
                             return <Card index={index} user={user} onClick={onClickUser} />
                         })}
                     </ul>
